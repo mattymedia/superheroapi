@@ -11,5 +11,8 @@ public interface IHeroVoteRepository extends JpaRepository<HeroVote, Integer> {
 
 	@Query("SELECT idHero, COUNT(*) FROM HeroVote GROUP BY idHero")
 	List<Object[]> countByIdHero();
+	
+	@Query("Select id, username, comentary, createdAt FROM HeroVote WHERE idHero = ?1")
+	List<Object[]> findCommentsByIdHero(Integer idHero);
 
 }

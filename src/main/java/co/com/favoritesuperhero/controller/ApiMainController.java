@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.favoritesuperhero.client.IHeroApiClient;
@@ -65,7 +66,7 @@ public class ApiMainController {
 
 		for (Map<String, Object> hero : heroInfo) {
 			boolean heroHasVote = false;
-			
+
 			for (Object[] voto : heroVotes) {
 				if (voto[0].equals(hero.get("id"))) {
 					Map<String, Object> heroInfoVoteData = new HashMap<>();
@@ -77,7 +78,7 @@ public class ApiMainController {
 					break;
 				}
 			}
-			
+
 			if (!heroHasVote) {
 				Map<String, Object> heroInfoVoteData = new HashMap<>();
 				heroInfoVoteData.put("idHero", hero.get("id"));
@@ -88,5 +89,25 @@ public class ApiMainController {
 		}
 
 		return heroInfoVoteDataList;
+	}
+
+	@GetMapping("/comments/{idHero}")
+	public List<Map<String, Object>> findByIdHero(@PathVariable Integer idHero) {
+		List<Object[]> allComments = voteRepository.findCommentsByIdHero(idHero);
+		List<Map<String, Object>> commentByHero = new ArrayList<>();
+
+		for (Object[] comment : allComments) {
+			if (comment[2] != "") {
+				Map<String, Object> commentary = new HashMap<>();
+				commentary.put("id", comment[0]);
+				commentary.put("username", comment[1]);
+				commentary.put("comentary", comment[2]);
+				commentary.put("createdAt", comment[3]);
+				commentByHero.add(commentary);
+			}
+		}
+
+		return commentByHero;
+
 	}
 }
