@@ -100,7 +100,7 @@ public class ApiMainController {
 		List<Map<String, Object>> commentByHero = new ArrayList<>();
 
 		for (Object[] comment : allComments) {
-			if (comment[2] != "") {
+			if (comment[2] != "" && comment[2] != null) {
 				Map<String, Object> commentary = new HashMap<>();
 				commentary.put("id", comment[0]);
 				commentary.put("username", comment[1]);
