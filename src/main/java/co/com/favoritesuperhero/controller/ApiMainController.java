@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/hero")
 @AllArgsConstructor
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {"https://herovotegui.web.app"})
 public class ApiMainController {
 
 	private IHeroApiClient heroClient;
