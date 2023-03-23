@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.favoritesuperhero.client.IHeroApiClient;
+import co.com.favoritesuperhero.entities.Suggestion;
 import co.com.favoritesuperhero.entities.HeroVote;
+import co.com.favoritesuperhero.repository.ISuggestionRepository;
 import co.com.favoritesuperhero.repository.IHeroVoteRepository;
 import lombok.AllArgsConstructor;
 
@@ -28,6 +29,8 @@ public class ApiMainController {
 	private IHeroApiClient heroClient;
 
 	private IHeroVoteRepository voteRepository;
+	
+	private ISuggestionRepository suggestionRepository;
 
 	@GetMapping("/list")
 	public List<Map<String, Object>> listAllHeroes() {
@@ -109,5 +112,10 @@ public class ApiMainController {
 
 		return commentByHero;
 
+	}
+	
+	@PostMapping("/suggestion")
+	public Suggestion saveContact(@RequestBody Suggestion suggestion) {
+		return suggestionRepository.save(suggestion);
 	}
 }
